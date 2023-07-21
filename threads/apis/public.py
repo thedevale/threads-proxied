@@ -20,7 +20,7 @@ class PublicThreadsApi(AbstractThreadsApi):
 
     THREADS_API_URL = 'https://www.threads.net/api/graphql'
 
-    def __init__(self: PublicThreadsApi) -> None:
+    def __init__(self: PublicThreadsApi, proxies: Optional[Union[dict, str]] = None) -> None:
         """
         Construct the object.
         """
@@ -40,6 +40,8 @@ class PublicThreadsApi(AbstractThreadsApi):
             'X-FB-LSD': self.threads_api_token,
             'X-IG-App-ID': '238260118697367',
         }
+
+        self.proxies = proxies;
 
     def get_user_id(self: PublicThreadsApi, username: str) -> int:
         """
@@ -66,6 +68,7 @@ class PublicThreadsApi(AbstractThreadsApi):
         response = requests.get(
             url=f'https://www.threads.net/@{username}',
             headers=headers,
+            proxies=self.proxies
         )
 
         user_id = re.search('"props":{"user_id":"(\\d+)"},', response.text).group(1)
@@ -97,6 +100,7 @@ class PublicThreadsApi(AbstractThreadsApi):
                 ),
                 'doc_id': '23996318473300828',
             },
+            proxies=self.proxies,
         )
 
         return response.json()
@@ -127,6 +131,7 @@ class PublicThreadsApi(AbstractThreadsApi):
                 ),
                 'doc_id': '6232751443445612',
             },
+            proxies=self.proxies,
         )
 
         return response.json()
@@ -157,6 +162,7 @@ class PublicThreadsApi(AbstractThreadsApi):
                 ),
                 'doc_id': '6307072669391286',
             },
+            proxies=self.proxies,
         )
 
         return response.json()
@@ -187,6 +193,7 @@ class PublicThreadsApi(AbstractThreadsApi):
                 ),
                 'doc_id': '5587632691339264',
             },
+            proxies=self.proxies,
         )
 
         return response.json()
@@ -213,6 +220,7 @@ class PublicThreadsApi(AbstractThreadsApi):
                 ),
                 'doc_id': '9360915773983802',
             },
+            proxies=self.proxies,
         )
 
         return response.json()
@@ -230,6 +238,7 @@ class PublicThreadsApi(AbstractThreadsApi):
         response = requests.get(
             url='https://www.instagram.com/instagram',
             headers=self.fetch_html_headers,
+            proxies=self.proxies,
         )
 
         token_key_value = re.search('LSD",\\[\\],{"token":"(.*?)"},\\d+\\]', response.text).group()
