@@ -25,7 +25,7 @@ class Threads:
         username: Optional[Union[dict, str]] = None,
         password: Optional[str] = None,
         settings: Optional[Union[dict, str]] = None,
-        proxies: Optional[Union[dict, str]] = None,
+        proxies=None,
     ) -> None:
         """
         Construct the object.
@@ -40,7 +40,7 @@ class Threads:
 
         self.settings = Settings(settings=settings)
 
-        self.public_api = PublicThreadsApi(proxies)
+        self.public_api = PublicThreadsApi(proxies=proxies)
         self.private_api = PrivateThreadsApi(settings=self.settings, username=username, password=password)
 
     def download_settings(self: Threads, path: str) -> None:

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+from typing import Optional
 
 import requests
 
@@ -19,8 +20,9 @@ class PublicThreadsApi(AbstractThreadsApi):
     """
 
     THREADS_API_URL = 'https://www.threads.net/api/graphql'
+    proxies = None
 
-    def __init__(self: PublicThreadsApi, proxies: Optional[Union[dict, str]] = None) -> None:
+    def __init__(self: PublicThreadsApi, proxies=None) -> None:
         """
         Construct the object.
         """
